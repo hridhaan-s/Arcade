@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade</title>
+
+    <!-- Favicon -->
+  <!-- Light mode favicon -->
+<link rel="icon" type="image/png" href="RewardsFavicon.png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Three.js -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Hack Club Flag -->
+    <a href="https://hackclub.com/">
+        <img style="position: absolute; top: 0; left: 10px; border: 0; width: 256px; z-index: 999;" 
+        src="https://assets.hackclub.com/flag-orpheus-left.svg" alt="Hack Club"/>
+    </a>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+                <div class="nav-links">
+            <a href="#">Submit</a>
+            <a href="#">Host a Workshop</a>
+            <a href="#">Read Guides</a>
+            <a href="#">Examples</a>
+            <button class="nav-cta">Submit»</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">ARCADE</h1>
+            <p class="hero-tagline">Make a game. Ship it. Win stuff.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Make a Game »</button>
+                <button class="btn-secondary">See Examples »</button>
+            </div>
+        </div>
+        <div class="hero-3d">
+            <canvas id="controller-canvas"></canvas>
+        </div>
+    </section>
+
+    <!-- JS -->
+  <script type="module" src="script.js"></script>
+
+</body>
+</html>
