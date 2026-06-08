@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcade</title>
+    <title>ArcadAi</title>
     <link rel="icon" type="image/png" href="RewardsFavicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -18,163 +18,125 @@
     </script>
 </head>
 <body>
+    <div id="readyScreen">
+        <div class="ready-content">
+            <h1 class="ready-title">
+                ARE YOU READY
+                <span>TO PLAY?</span>
+            </h1>
+            <p class="ready-subtitle">
+                AND MAKE GAMES?
+            </p>
+            <div class="mc-switch" id="startArcade">
+                <div class="mc-switch-front">
+                    START
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Hack Club Flag -->
+    <div id="glitchBar"></div>
+    <div class="crt"></div>
+
     <a href="https://hackclub.com/">
-        <img style="position: absolute; top: 0; left: 10px; border: 0; width: 256px; z-index: 999;"
-        src="https://assets.hackclub.com/flag-orpheus-left.svg" alt="Hack Club"/>
+        <img style="position: absolute; top: 0; left: 10px; border: 0; width: 256px; z-index: 999;" src="https://assets.hackclub.com/flag-orpheus-left.svg" alt="Hack Club"/>
     </a>
 
-    <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-links">
-        <a href="#" id="navSubmit">Submit</a>
-        <a href="#" id="navWorkshop">Host a Workshop</a>
-        <a href="#rules">Rules and Guides</a>
-        <a href="example.html">Examples</a>
-    <a href="https://hackclub.enterprise.slack.com/archives/C0B72VAHXHB" target="_blank" class="nav-slack">
-    Join Slack
-</a>
-    </div>
-</nav>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#" id="navSubmit">Submit</a>
+            <a href="#" id="navWorkshop">Host a Workshop</a>
+            <a href="#rules">Rules and Guides</a>
+            <a href="example.html">Examples</a>
+            <a href="https://hackclub.enterprise.slack.com/archives/C0B72VAHXHB" target="_blank" class="nav-slack">Join Slack</a>
+        </div>
+    </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">ARCADE</h1>
-            <p class="hero-tagline">Make a game using only HTML, CSS, and JavaScript and a lil bit of AI </p>
-        
+            <h1 class="hero-title">ARCADAi</h1>
+            <p class="hero-tagline">
+                Build a <span class="retro-word">Retro</span> Arcade Game with AI and Get Rewarded for Shipping It
+            </p>
         </div>
         <div class="hero-3d">
             <canvas id="controller-canvas"></canvas>
         </div>
     </section>
 
-<section class="ai-section">
-
-  <span class="section-tag">
-    POWERED BY AI
-  </span>
-
-  <h2 class="ai-title">
-    Why Are We Using AI?
-  </h2>
-
-  <p class="ai-description">
-    Games can take weeks to build from scratch.
-    AI helps you learn in this and makes the process a bit faster so you can focus on
-    experimenting, creating, and making something uniquely yours (aka your own first game).
-  </p>
-
-  <div class="ai-quote">
-    AI builds the first version.<br>
-    You build the final game.
-  </div>
-
-  <div class="ai-grid">
-
-    <div class="ai-card">
-      <h3>AI Helps With</h3>
-
-      <ul>
-        <li>Creating a prototype</li>
-        <li>Writing code</li>
-        <li>Fixing bugs</li>
-        <li>Adding features</li>
-        <li>Explaining concepts</li>
-      </ul>
-    </div>
-
-    <div class="ai-card">
-      <h3>You Focus On</h3>
-
-      <ul>
-        <li>Coming up with ideas</li>
-        <li>Testing your game</li>
-        <li>Improving the design</li>
-        <li>Making it fun</li>
-        <li>Adding personality</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="ai-footer-note">
-    AI can generate code.<br>
-    It can't generate your creativity.
-  </div>
-
-</section>
-
-<section class="arcade-process">
-
-    <div class="process-header">
-
-        <span class="process-tag">
-            ARCADE JOURNEY
-        </span>
-
-        <h2 class="process-title">
-            How Arcade Works
-        </h2>
-
-        <p class="process-subtitle">
-            Build a game with AI, improve it with your own ideas,
-            then launch it for the world to play.
+    <section class="ai-section">
+        <span class="section-tag">Using AI?</span>
+        <h2 class="ai-title">Why Are We Using AI?</h2>
+        <p class="ai-description">
+            Games can take weeks to build from scratch.
+            AI helps you learn in this and makes the process a bit faster so you can focus on
+            experimenting, creating, and making something uniquely yours (aka your own first game).
         </p>
+        <div class="ai-quote">
+            AI Helps you Build the first version.<br>
+            You build the final game.
+        </div>
+        <div class="ai-grid">
+            <div class="ai-card">
+                <h3>AI Helps With</h3>
+                <ul>
+                    <li>Creating a prototype</li>
+                    <li>Writing code</li>
+                    <li>Fixing bugs</li>
+                    <li>Adding features</li>
+                    <li>Explaining concepts</li>
+                </ul>
+            </div>
+            <div class="ai-card">
+                <h3>You Focus On</h3>
+                <ul>
+                    <li>Coming up with ideas</li>
+                    <li>Testing your game</li>
+                    <li>Improving the design</li>
+                    <li>Making it fun</li>
+                    <li>Adding personality</li>
+                </ul>
+            </div>
+        </div>
+        <div class="ai-footer-note">
+            AI can generate code.<br>
+            It can't generate your creativity.
+        </div>
+    </section>
 
-    </div>
-
-    <div class="process-image-container">
-        <img
-            src="Screenshot 2026-06-01 232734.png"
-            alt="How Arcade Works"
-            class="process-image"
-        >
-    </div>
-
-    <div class="process-flow">
-
-        <div class="flow-card">
-            <div class="flow-icon"></div>
-            <h3>START</h3>
-            <p>
-                Create the first version of your game using AI
-                and submit your prompt.
+    <section class="arcade-process">
+        <div class="process-header">
+            <span class="process-tag">ARCADE JOURNEY</span>
+            <h2 class="process-title">How Arcade Works</h2>
+            <p class="process-subtitle">
+                Build a game with AI, improve it with your own ideas, then launch it for the world to play.
             </p>
         </div>
-
-        <div class="flow-arrow">→</div>
-
-        <div class="flow-card">
-            <div class="flow-icon"></div>
-            <h3>UPGRADE</h3>
-            <p>
-                Add at least 5 improvements and make the
-                game feel like yours.
-            </p>
+        <div class="process-image-container">
+            <img src="Screenshot 2026-06-01 232734.png" alt="How Arcade Works" class="process-image">
         </div>
-
-        <div class="flow-arrow">→</div>
-
-        <div class="flow-card">
-            <div class="flow-icon"></div>
-            <h3>LAUNCH</h3>
-            <p>
-                Publish your game, share your GitHub repo,
-                and show what you've learned.
-            </p>
+        <div class="process-flow">
+            <div class="flow-card">
+                <div class="flow-icon"></div>
+                <h3>START</h3>
+                <p>Create the first version of your game using AI and submit your prompt.</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-card">
+                <div class="flow-icon"></div>
+                <h3>UPGRADE</h3>
+                <p>Add at least 5 improvements and make the game feel like yours.</p>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-card">
+                <div class="flow-icon"></div>
+                <h3>LAUNCH</h3>
+                <p>Publish your game, share your GitHub repo, and show what you've learned.</p>
+            </div>
         </div>
-
-    </div>
-
-    <div class="process-quote">
-        From a prompt to a playable game.
-    </div>
-
-</section>
+        <div class="process-quote">From a prompt to a playable game.</div>
+    </section>
     
-    <!-- Path Selector -->
     <div class="selector-section">
         <p class="selector-label">CHOOSE YOUR PATH</p>
         <div class="path-buttons">
@@ -186,7 +148,6 @@
             </div>
         </div>
 
-        <!-- Club Content -->
         <div class="submission-content" id="clubContent">
             <div class="content-inner">
                 <h2 class="content-title">Arcade for Clubs</h2>
@@ -204,165 +165,16 @@
             </div>
         </div>
 
-
-
         <div class="yaydino2">
-    <img src="1.png" alt="YayDino">
-</div>
- 
-
-
-
-
-
-
-<!-- Rewards Section -->
- 
-
-<section class="rewards-section">
- 
-
-   <div class="rewards-header">
-        <h2 class="rewards-title">Make a Game using AI</h2>
-        <h2 class="rewards-title accent">and get Your Reward.</h2>
-        <p class="rewards-sub">Earn <strong>$5</strong> worth of reward for every submission you make.</p>
-    </div>
-<div class="reward-side-image">
-    <img src="1.png" alt="Arcade Mascot">
-</div>
-    <!-- Marquee -->
-    <div class="marquee-wrapper">
-        <div class="marquee-track">
-            <!-- First set -->
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c2be-7597-a584-adfa7424e5cc/image.png" alt="Robux"/>
-                <span class="reward-name">Robux Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c560-7306-bf54-0f0309e8012c/image.png" alt="Steam"/>
-                <span class="reward-name">Steam Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-cb3a-797b-8372-727cfa99ce7d/image.png" alt="PlayStation"/>
-                <span class="reward-name">PS5 Store Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-cdbc-717c-9516-8ceed5521d50/image.png" alt="Xbox"/>
-                <span class="reward-name">Xbox Gamepass</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b6-8c25-72ff-9af2-ae48d4276445/image.png" alt="Gaming Chair"/>
-                <span class="reward-name">Gaming Accessories</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b5-5a3d-7637-90d5-1876262efb31/image.png" alt="Snacks"/>
-                <span class="reward-name">Snacks Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c89d-77c0-a14c-f0b7e09f0a83/image.png" alt="Gaming Disc"/>
-                <span class="reward-name">Gaming Discs</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78ba-0c8d-72cf-9ee6-25249cc44a6c/image.png" alt="Pizza"/>
-                <span class="reward-name">Pizza Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-           
-            <!-- Duplicate set for seamless loop -->
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c2be-7597-a584-adfa7424e5cc/image.png" alt="Robux"/>
-                <span class="reward-name">Robux Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c560-7306-bf54-0f0309e8012c/image.png" alt="Steam"/>
-                <span class="reward-name">Steam Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-cb3a-797b-8372-727cfa99ce7d/image.png" alt="PlayStation"/>
-                <span class="reward-name">PS5 Store Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-cdbc-717c-9516-8ceed5521d50/image.png" alt="Xbox"/>
-                <span class="reward-name">Xbox Gamepass</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b6-8c25-72ff-9af2-ae48d4276445/image.png" alt="Gaming Chair"/>
-                <span class="reward-name">Gaming Accessories</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b5-5a3d-7637-90d5-1876262efb31/image.png" alt="Snacks"/>
-                <span class="reward-name">Snacks Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78b3-c89d-77c0-a14c-f0b7e09f0a83/image.png" alt="Gaming Disc"/>
-                <span class="reward-name">Gaming Discs</span>
-                <span class="reward-rate">$5</span>
-            </div>
-            <div class="reward-card">
-                <img src="https://cdn.hackclub.com/019e78ba-0c8d-72cf-9ee6-25249cc44a6c/image.png" alt="Pizza"/>
-                <span class="reward-name">Pizza Grant</span>
-                <span class="reward-rate">$5</span>
-            </div>
-         
+            <img src="1.png" alt="YayDino">
         </div>
-    </div>
-</section>
 
-<section id="guides" class="guide-section">
-
-
-<h2 class="guide-heading">Arcade Guide</h2>
-
-<p class="guide-text">
-    Learn everything you need to know about Arcade, submissions,
-    rewards, workshops, and project requirements.
-</p>
-
-<div class="guide-container">
-    <iframe
-        src="https://www.canva.com/design/DAHLJIkIras/yFGuUKuNm_g_faqWocFEzg/view?embed"
-        allowfullscreen>
-    </iframe>
-</div>
-
-<a
-    class="guide-button"
-    href="https://www.canva.com/design/DAHLJIkIras/yFGuUKuNm_g_faqWocFEzg/view"
-    target="_blank">
-
-   
-</a>
-
-
-</section>
-
-
-
-
-
-
-
-
-        <!-- Individual Content -->
         <div class="submission-content" id="individualContent">
             <div class="content-inner">
                 <h2 class="content-title">Arcade for Individuals</h2>
                 <p class="content-desc">Building solo? No problem. Arcade is open to any teenager who wants to build a game and get rewarded for shipping it. No club needed — just you, your code, and your ideas.</p>
                 <h3 class="content-subtitle">How it works</h3>
-                <p class="content-text">Build a game, host it on GitHub Pages or itch.io, and submit it. Each approved submission earns you rewards. Check out the <a href="#" class="content-link">requirements & examples page</a> first.</p>
+                <p class="content-text">Build a game, host it on GitHub Pages or itch.io, and submit it. Each approved submission earns you rewards. Check out the <a href="#rules" class="content-link">requirements & examples page</a> first.</p>
                 <h3 class="content-subtitle">Steps</h3>
                 <div class="steps-grid">
                     <div class="step-card"><span class="step-num">1</span><p>Build your game</p></div>
@@ -373,100 +185,163 @@
                 <button class="btn-primary" style="margin-top: 24px;">Submit Your Game »</button>
             </div>
         </div>
-
-<section class="rules-section" id="rules">
-
-    <h1 class="rules-title">Rules & Guidelines</h1>
-
-    <div class="rule-card">
-        <h2>Requirements</h2>
-
-        <ul>
-            <li>You must be between <strong>13 and 18 years old</strong>.</li>
-            <li>You must not be banned from <strong>Hackatime</strong>.</li>
-            <li>You must spend at least <strong>1 hour</strong> working on your project.</li>
-            <li>Your project must be your own work.</li>
-        </ul>
-    </div>
-
-    <div class="rule-card">
-        <h2>Individual Submission Requirements</h2>
-
-        <ul>
-            <li>You must be a member of the <strong>Hack Club Slack</strong>.</li>
-            <li>Your identity must be verified using <strong>Hack Club Auth</strong>.</li>
-            <li>You must track your time using <strong>Hackatime</strong>.</li>
-            <li>You must submit a working project.</li>
-        </ul>
-    </div>
-
-    <div class="rule-card">
-        <h2>AI Usage Policy</h2>
-
-        <p>
-            If a reviewer asks you to explain your code, you should be able to clearly explain how it works.
-        </p>
-    </div>
-
-    <div class="rule-card warning-card">
-        
-    </div>
-
-    <div class="rule-card">
-        <h2>Need Help?</h2>
-
-        <p>
-            Reach out to <strong>@Hridhaan</strong> for any questions or support.
-        </p>
-
-        <p>
-            Join <strong>#arcade-ysws</strong> on the Hack Club Slack to ask questions,
-            share progress, and get help from other participants.
-        </p>
-    </div>
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-
-    <!-- Music Player -->
-    <div class="music-player" id="musicPlayer">
-        <div class="player-body" id="playerBody">
-            <div class="song-info">
-                <div class="song-name" id="songName">Arcade (80s Era)</div>
-            </div>
-            <div class="player-controls">
-                <button class="ctrl-btn" id="prevBtn">⏮</button>
-                <button class="ctrl-btn play-btn" id="playBtn">▶</button>
-                <button class="ctrl-btn" id="nextBtn">⏭</button>
-                <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+    </div> <section class="rewards-section">
+        <div class="rewards-header">
+            <h2 class="rewards-title">Make a Game using AI</h2>
+            <h2 class="rewards-title accent">and get Your Reward.</h2>
+            <p class="rewards-sub">Earn <strong>$5</strong> worth of reward for every submission you make.</p>
+        </div>
+        <div class="reward-side-image">
+            <img src="1.png" alt="Arcade Mascot">
+        </div>
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c2be-7597-a584-adfa7424e5cc/image.png" alt="Robux"/>
+                    <span class="reward-name">Robux Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c560-7306-bf54-0f0309e8012c/image.png" alt="Steam"/>
+                    <span class="reward-name">Steam Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-cb3a-797b-8372-727cfa99ce7d/image.png" alt="PlayStation"/>
+                    <span class="reward-name">PS5 Store Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-cdbc-717c-9516-8ceed5521d50/image.png" alt="Xbox"/>
+                    <span class="reward-name">Xbox Gamepass</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b6-8c25-72ff-9af2-ae48d4276445/image.png" alt="Gaming Chair"/>
+                    <span class="reward-name">Gaming Accessories</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b5-5a3d-7637-90d5-1876262efb31/image.png" alt="Snacks"/>
+                    <span class="reward-name">Snacks Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c89d-77c0-a14c-f0b7e09f0a83/image.png" alt="Gaming Disc"/>
+                    <span class="reward-name">Gaming Discs</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78ba-0c8d-72cf-9ee6-25249cc44a6c/image.png" alt="Pizza"/>
+                    <span class="reward-name">Pizza Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+               
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c2be-7597-a584-adfa7424e5cc/image.png" alt="Robux"/>
+                    <span class="reward-name">Robux Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c560-7306-bf54-0f0309e8012c/image.png" alt="Steam"/>
+                    <span class="reward-name">Steam Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-cb3a-797b-8372-727cfa99ce7d/image.png" alt="PlayStation"/>
+                    <span class="reward-name">PS5 Store Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-cdbc-717c-9516-8ceed5521d50/image.png" alt="Xbox"/>
+                    <span class="reward-name">Xbox Gamepass</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b6-8c25-72ff-9af2-ae48d4276445/image.png" alt="Gaming Chair"/>
+                    <span class="reward-name">Gaming Accessories</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b5-5a3d-7637-90d5-1876262efb31/image.png" alt="Snacks"/>
+                    <span class="reward-name">Snacks Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78b3-c89d-77c0-a14c-f0b7e09f0a83/image.png" alt="Gaming Disc"/>
+                    <span class="reward-name">Gaming Discs</span>
+                    <span class="reward-rate">$5</span>
+                </div>
+                <div class="reward-card">
+                    <img src="https://cdn.hackclub.com/019e78ba-0c8d-72cf-9ee6-25249cc44a6c/image.png" alt="Pizza"/>
+                    <span class="reward-name">Pizza Grant</span>
+                    <span class="reward-rate">$5</span>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
+    <section id="guides" class="guide-section">
+        <h2 class="guide-heading">Arcade Guide</h2>
+        <p class="guide-text">
+            Learn everything you need to know about Arcade, submissions, rewards, workshops, and project requirements.
+        </p>
+        <div class="guide-container">
+            <iframe src="https://www.canva.com/design/DAHLJIkIras/yFGuUKuNm_g_faqWocFEzg/view?embed" allowfullscreen></iframe>
+        </div>
+        <a class="guide-button" href="https://www.canva.com/design/DAHLJIkIras/yFGuUKuNm_g_faqWocFEzg/view" target="_blank"></a>
+    </section>
+      
+    <section class="rules-section" id="rules">
+        <h1 class="rules-title">Rules & Guidelines</h1>
+        <div class="rule-card">
+            <h2>Requirements</h2>
+            <ul>
+                <li>You must be between <strong>13 and 18 years old</strong>.</li>
+                <li>You must not be banned from <strong>Hackatime</strong>.</li>
+                <li>You must spend at least <strong>1 hour</strong> working on your project.</li>
+                <li>Your project must be your own work.</li>
+            </ul>
+        </div>
+
+        <div class="rule-card">
+            <h2>Individual Submission Requirements</h2>
+            <ul>
+                <li>You must be a member of the <strong>Hack Club Slack</strong>.</li>
+                <li>Your identity must be verified using <strong>Hack Club Auth</strong>.</li>
+                <li>You must track your time using <strong>Hackatime</strong>.</li>
+                <li>You must submit a working project.</li>
+            </ul>
+        </div>
+
+        <div class="rule-card">
+            <h2>Need Help?</h2>
+            <p>Reach out to <strong>@Hridhaan</strong> for any questions or support.</p>
+            <p>Join <strong>#arcade-ysws</strong> on the Hack Club Slack to ask questions, share progress, and get help from other participants.</p>
+        </div>
+    </section>
+
+   <div class="music-player" id="musicPlayer">
+    <div class="player-body" id="playerBody">
+        
+        <audio id="arcadeAudio" crossorigin="anonymous"></audio>
+        
+        <div class="matrix-container">
+            <canvas id="audioMatrix" width="150" height="40"></canvas>
+        </div>
+
+        <div class="song-info">
+            <div class="song-name" id="songName">Arcade (80s Era)</div>
+        </div>
+        <div class="player-controls">
+            <button class="ctrl-btn" id="prevBtn">⏮</button>
+            <button class="ctrl-btn play-btn" id="playBtn">⏸</button>
+            <button class="ctrl-btn" id="nextBtn">⏭</button>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+        </div>
+    </div>
+</div>
+
     <footer class="footer">
         <div class="footer-content">
             <span>Made by <strong>@Hridhaan</strong> for <a href="https://hackclub.com/" target="_blank">Hack Club</a>, a 501(c)(3) non-profit.</span>
@@ -474,12 +349,8 @@
                 <iframe src="https://giphy.com/embed/hkqefnFjn2MWVl6xvq" width="30" height="30" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
             </div>
         </div>
-      
     </footer>
 
     <script type="module" src="script.js"></script>
-
-
-    
 </body>
 </html>

@@ -2102,3 +2102,401 @@ font-weight:800;
     }
 
 }
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.03) 0px,
+      rgba(255,255,255,0.03) 1px,
+      transparent 2px,
+      transparent 4px
+    );
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.98; }
+  100% { opacity: 1; }
+}
+
+body {
+  animation: crtFlicker 0.15s infinite;
+}
+
+.arcade-title {
+  position: relative;
+}
+
+.arcade-title::before,
+.arcade-title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+}
+
+.arcade-title::before {
+  color: red;
+  transform: translateX(-2px);
+  opacity: 0;
+}
+
+.arcade-title::after {
+  color: cyan;
+  transform: translateX(2px);
+  opacity: 0;
+}
+.glitch::before,
+.glitch::after {
+  opacity: 0.7;
+}
+.arcade-title {
+  position: relative;
+}
+
+.arcade-title::before,
+.arcade-title::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+}
+
+.arcade-title::before {
+  color: red;
+  transform: translateX(-2px);
+  opacity: 0;
+}
+
+.arcade-title::after {
+  color: cyan;
+  transform: translateX(2px);
+  opacity: 0;
+}
+
+.glitch::before,
+.glitch::after {
+  opacity: 0.7;
+}
+
+.screen-glitch {
+  transform: translateX(2px);
+  filter: hue-rotate(20deg);
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  z-index: 9998;
+
+  background-image:
+    url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+body {
+  box-shadow:
+    inset 0 0 100px rgba(0,100,255,0.15),
+    inset 0 0 200px rgba(140,0,255,0.1);
+}
+
+
+
+
+body {
+    animation: flicker 0.12s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: .99; }
+    100% { opacity: 1; }
+}
+
+.crt {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+
+    background:
+    repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 1px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+body {
+    animation: flicker 0.12s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: .99; }
+    100% { opacity: 1; }
+}
+#glitchBar{
+    position:fixed;
+    left:0;
+    width:100%;
+    height:6px;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        #00ffff,
+        #ff00ff,
+        transparent
+    );
+
+    pointer-events:none;
+    z-index:99999;
+
+    opacity:0;
+}
+.retro-word{
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.1em;
+
+    background: linear-gradient(
+        90deg,
+        #ff0080,
+        #ffae00,
+        #ffff00
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 0 8px rgba(255,0,128,.8),
+        0 0 16px rgba(255,174,0,.5);
+
+    display:inline-block;
+
+    animation: retroGlow 2s infinite alternate;
+}
+@keyframes retroGlow{
+    from{
+        transform:translateY(0);
+        filter:brightness(1);
+    }
+
+    to{
+        transform:translateY(-2px);
+        filter:brightness(1.25);
+    }
+}
+
+body {
+    cursor: url("https://img.icons8.com/3d-fluent/32/cursor-16.png"), auto;
+}
+
+#readyScreen{
+    position:fixed;
+    inset:0;
+
+    background:
+    radial-gradient(circle at center,
+    #181030 0%,
+    #050505 100%);
+
+    z-index:999998;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.ready-content{
+    text-align:center;
+}
+
+.ready-title{
+    font-family:'Press Start 2P';
+
+    font-size:4rem;
+
+    color:white;
+
+    line-height:1.5;
+
+    animation:
+    titleFloat 2s infinite ease-in-out;
+}
+
+.ready-title span{
+    display:block;
+
+    color:#00ffff;
+
+    text-shadow:
+    0 0 10px #00ffff,
+    0 0 25px #00ffff,
+    0 0 60px #00ffff;
+}
+
+.ready-subtitle{
+    margin-top:25px;
+
+    color:#ff00ff;
+
+    font-size:1.5rem;
+
+    font-weight:700;
+
+    animation:pulseText 1s infinite;
+}
+
+.mc-switch{
+
+    width:340px;
+
+    margin:60px auto;
+
+    cursor:pointer;
+
+    perspective:1000px;
+
+    animation:
+    switchBounce 1.5s infinite;
+}
+
+.mc-switch-front{
+
+    background:
+    linear-gradient(
+    #79ff52,
+    #2fc600);
+
+    color:black;
+
+    font-family:'Press Start 2P';
+
+    padding:30px;
+
+    border-bottom:8px solid #1d7f00;
+
+    border-right:8px solid #1d7f00;
+
+    font-size:1.5rem;
+
+    transition:.15s;
+}
+.mc-switch:hover .mc-switch-front{
+
+    transform:
+    translateY(5px);
+
+    border-bottom:3px solid #1d7f00;
+
+    box-shadow:
+
+    0 0 30px #79ff52,
+
+    0 0 70px #79ff52;
+}
+
+@keyframes pulseText{
+
+    50%{
+        transform:scale(1.08);
+
+        text-shadow:
+        0 0 10px #ff00ff,
+        0 0 30px #ff00ff;
+    }
+}
+
+@keyframes switchBounce{
+
+    50%{
+        transform:
+        translateY(-10px);
+    }
+}
+
+@keyframes titleFloat{
+
+    50%{
+        transform:
+        translateY(-8px);
+    }
+}
+
+#readyScreen::before{
+
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+
+    repeating-linear-gradient(
+    0deg,
+
+    rgba(255,255,255,.05) 0px,
+    rgba(255,255,255,.05) 2px,
+
+    transparent 2px,
+    transparent 4px);
+
+    pointer-events:none;
+}
+.launching{
+
+    animation:
+    launchSequence 1.5s forwards;
+}
+
+@keyframes launchSequence{
+
+    0%{
+        opacity:1;
+        transform:scale(1);
+    }
+
+    30%{
+        opacity:1;
+        transform:scale(1.05);
+    }
+
+    60%{
+        filter:brightness(2);
+    }
+
+    100%{
+        opacity:0;
+        transform:scale(3);
+        filter:brightness(4);
+    }
+}
+
+.matrix-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid #5B23FF;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+#audioMatrix {
+    display: block;
+    image-rendering: pixelated; /* Keeps that crisp retro arcade look */
+}

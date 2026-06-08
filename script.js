@@ -99,7 +99,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-// ── MUSIC PLAYER ──
+// ── MUSIC PLAYER WITH RETRO AUDIO MATRIX VISUALIZER ──
 const playlist = [
     { file: 'slimeyfox-arcade-80s-era-481352 (2).mp3', name: 'Arcade (80s Era)' },
     { file: 'enemy_instrumental.mp3', name: 'Enemy (Instrumental)' },
@@ -113,27 +113,75 @@ let isPlaying = false;
 const audio = new Audio();
 audio.volume = 0.7;
 
+// Web Audio API Elements
+let audioContext;
+let analyzer;
+let dataArray;
+let sourceNode;
+let isAudioContextInitialized = false;
+
 const playBtn = document.getElementById('playBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const songName = document.getElementById('songName');
 const volumeSlider = document.getElementById('volumeSlider');
+const matrixCanvas = document.getElementById('audioMatrix');
+let matrixCtx = matrixCanvas ? matrixCanvas.getContext('2d') : null;
+
+// Safe Initialization Engine for Audio Analysis Nodes
+function initAudioAnalyzer() {
+    if (isAudioContextInitialized) return; // Prevent double creation crash
+
+    try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyzer = audioContext.createAnalyser();
+        
+        // Lower fftSize creates wider, chunky, retro-style bars (16 bars total)
+        analyzer.fftSize = 32; 
+        
+        const bufferLength = analyzer.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        
+        // Wire the HTML Audio node into our script graph nodes
+        sourceNode = audioContext.createMediaElementSource(audio);
+        sourceNode.connect(analyzer);
+        analyzer.connect(audioContext.destination);
+        
+        isAudioContextInitialized = true;
+        
+        // Start matrix frame loop render
+        drawMatrix();
+    } catch (e) {
+        console.warn("Web Audio API matrix mapping bypassed:", e);
+    }
+}
 
 function loadTrack(index) {
+    if (!playlist[index]) return;
     audio.src = playlist[index].file;
-    songName.textContent = playlist[index].name;
-    if (isPlaying) audio.play();
+    if (songName) songName.textContent = playlist[index].name;
+    if (isPlaying) {
+        audio.play().catch(err => console.log("Audio play interrupted:", err));
+    }
 }
 
 function togglePlay() {
+    // Wake up context nodes if browser paused them, or spin up fresh
+    if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+    } else {
+        initAudioAnalyzer();
+    }
+
     if (isPlaying) {
         audio.pause();
         isPlaying = false;
-        playBtn.textContent = '▶';
+        if (playBtn) playBtn.textContent = '▶';
     } else {
-        audio.play();
-        isPlaying = true;
-        playBtn.textContent = '⏸';
+        audio.play().then(() => {
+            isPlaying = true;
+            if (playBtn) playBtn.textContent = '⏸';
+        }).catch(err => console.log("Audio context play blocked:", err));
     }
 }
 
@@ -147,44 +195,105 @@ function prevTrack() {
     loadTrack(currentTrack);
 }
 
+// ── MATRIX CANVAS RENDER ANIMATION LOOP ──
+function drawMatrix() {
+    if (!matrixCtx || !analyzer) return;
+
+    requestAnimationFrame(drawMatrix);
+    
+    // Extract dynamic frequency changes from active decibel range arrays
+    analyzer.getByteFrequencyData(dataArray);
+    
+    const width = matrixCanvas.width;
+    const height = matrixCanvas.height;
+    
+    // Creates a neon persistence-of-vision trailing blur by drawing opaque squares over history frames
+    matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+    matrixCtx.fillRect(0, 0, width, height);
+    
+    const barCount = analyzer.frequencyBinCount;
+    const barWidth = (width / barCount) - 2;
+    let x = 0;
+
+    for (let i = 0; i < barCount; i++) {
+        const percent = dataArray[i] / 255;
+        const barHeight = percent * height;
+        
+        // Retro-Futuristic Rainbow: Modulating HSL spectrum offsets
+        matrixCtx.fillStyle = `hsl(${250 + (i * 8)}, 100%, 60%)`;
+        
+        // Draw each column box starting at bottom container threshold bound
+        matrixCtx.fillRect(x, height - barHeight, barWidth, barHeight);
+        
+        x += barWidth + 2;
+    }
+}
+
 audio.addEventListener('ended', nextTrack);
-volumeSlider.addEventListener('input', () => { audio.volume = volumeSlider.value; });
-playBtn.addEventListener('click', togglePlay);
-nextBtn.addEventListener('click', nextTrack);
-prevBtn.addEventListener('click', prevTrack);
+
+if (volumeSlider) {
+    volumeSlider.addEventListener('input', () => { audio.volume = volumeSlider.value; });
+}
+if (playBtn) playBtn.addEventListener('click', togglePlay);
+if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+
+// Boot first metadata profile state
+loadTrack(0);
+
+// Global Exporter Hook so your main start Arcade switch can initialize this as well
+window.forceStartMusicWithMatrix = function() {
+    initAudioAnalyzer();
+    if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume();
+    }
+    if (!isPlaying) {
+        audio.play().then(() => {
+            isPlaying = true;
+            if (playBtn) playBtn.textContent = '⏸';
+        }).catch(err => console.log("Audio boot skipped:", err));
+    }
+};
+
+// Initial initialization of track data
 loadTrack(0);
 
 // ── PATH SELECTOR ──
 window.selectPath = function(path) {
-    document.getElementById('clubBtn').classList.remove('active');
-    document.getElementById('individualBtn').classList.remove('active');
-    document.getElementById('clubContent').classList.remove('active');
-    document.getElementById('individualContent').classList.remove('active');
+    const clubBtn = document.getElementById('clubBtn');
+    const individualBtn = document.getElementById('individualBtn');
+    const clubContent = document.getElementById('clubContent');
+    const individualContent = document.getElementById('individualContent');
+
+    if (clubBtn) clubBtn.classList.remove('active');
+    if (individualBtn) individualBtn.classList.remove('active');
+    if (clubContent) clubContent.classList.remove('active');
+    if (individualContent) individualContent.classList.remove('active');
 
     if (path === 'club') {
-        document.getElementById('clubBtn').classList.add('active');
-        document.getElementById('clubContent').classList.add('active');
+        if (clubBtn) clubBtn.classList.add('active');
+        if (clubContent) clubContent.classList.add('active');
     } else {
-        document.getElementById('individualBtn').classList.add('active');
-        document.getElementById('individualContent').classList.add('active');
+        if (individualBtn) individualBtn.classList.add('active');
+        if (individualContent) individualContent.classList.add('active');
     }
 
-    setTimeout(() => {
-        document.getElementById(path + 'Content').scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }, 100);
+    const targetContent = document.getElementById(path + 'Content');
+    if (targetContent) {
+        setTimeout(() => {
+            targetContent.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }, 100);
+    }
 }
 
 // Navbar Actions
-
 document.getElementById("navWorkshop")?.addEventListener("click", (e) => {
     e.preventDefault();
-
     selectPath("club");
-
-    document.getElementById("clubContent").scrollIntoView({
+    document.getElementById("clubContent")?.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
@@ -192,31 +301,95 @@ document.getElementById("navWorkshop")?.addEventListener("click", (e) => {
 
 document.getElementById("navSubmit")?.addEventListener("click", (e) => {
     e.preventDefault();
-
     selectPath("individual");
-
-    document.getElementById("individualContent").scrollIntoView({
+    document.getElementById("individualContent")?.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
 });
 
-
+// Update Popup Handlers
 const popup = document.getElementById("updatePopup");
-
-if(localStorage.getItem("arcadePopupClosed")){
-    popup.style.display = "none";
+if (popup) {
+    if (localStorage.getItem("arcadePopupClosed")) {
+        popup.style.display = "none";
+    }
+    document.getElementById("closePopupBtn")?.addEventListener("click", () => {
+        popup.style.display = "none";
+        localStorage.setItem("arcadePopupClosed", "true");
+    });
 }
 
-document
-.getElementById("closePopupBtn")
-?.addEventListener("click", () => {
+// Glitch Visual Effects
+setInterval(() => {
+    const title = document.querySelector(".arcade-title");
+    if (!title) return;
+    title.classList.add("glitch");
+    setTimeout(() => {
+        title.classList.remove("glitch");
+    }, 120);
+}, 4000);
 
-    popup.style.display = "none";
+function glitchScreen() {
+    document.body.classList.add("screen-glitch");
+    setTimeout(() => {
+        document.body.classList.remove("screen-glitch");
+    }, 150);
+}
 
-    localStorage.setItem(
-        "arcadePopupClosed",
-        "true"
-    );
+setInterval(() => {
+    if (Math.random() > 0.7) {
+        glitchScreen();
+    }
+}, 20000);
 
-});
+const bar = document.getElementById("glitchBar");
+if (bar) {
+    setInterval(() => {
+        bar.style.top = Math.random() * window.innerHeight + "px";
+        bar.style.opacity = 1;
+        setTimeout(() => {
+            bar.style.opacity = 0;
+        }, 100);
+    }, 7000);
+}
+
+const messages = [
+    "INSERT COIN",
+    "PLAYER ONE READY",
+    "LEVEL 1",
+    "BONUS STAGE",
+    "ARCADE ONLINE"
+];
+
+// ── CONSOLIDATED START SCREEN & AUDIO AUTOSTART EVENT ──
+const startBtn = document.getElementById("startArcade");
+const readyScreen = document.getElementById("readyScreen");
+
+if (startBtn && readyScreen) {
+    startBtn.addEventListener("click", () => {
+        // 1. Button Press Scale Effect
+        startBtn.style.transform = "scale(0.95)";
+        
+        // 2. Play the background track instantly 
+        if (!isPlaying) {
+            audio.play().then(() => {
+                isPlaying = true;
+                if (playBtn) playBtn.textContent = '⏸';
+            }).catch(err => console.log("Audio play request failed:", err));
+        }
+
+        // 3. Fire Launch Animation Class
+        readyScreen.classList.add("launching");
+
+        // 4. Smooth Transition out & clean up node elements
+        setTimeout(() => {
+            readyScreen.style.transition = "opacity 0.8s ease";
+            readyScreen.style.opacity = "0";
+
+            setTimeout(() => {
+                readyScreen.remove();
+            }, 800);
+        }, 500);
+    });
+}
