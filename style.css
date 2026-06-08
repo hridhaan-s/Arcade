@@ -2500,3 +2500,54 @@ body {
     display: block;
     image-rendering: pixelated; /* Keeps that crisp retro arcade look */
 }
+
+/* Update your matrix box container border to matching yellow */
+.matrix-container {
+    border: 1px solid #FFD700 !important;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Adjust the volume slider knob color profile */
+.volume-slider {
+    accent-color: #FFD700;
+}
+
+.mc-switch-front{
+    background: linear-gradient(
+        #ffff66,
+        #ffe600
+    );
+
+    border-bottom: 8px solid #b8860b;
+    border-right: 8px solid #b8860b;
+
+    color: black;
+
+    box-shadow:
+        0 0 20px rgba(255,230,0,.7),
+        0 0 50px rgba(255,230,0,.4);
+}
+.mc-switch-front{
+    background: linear-gradient(
+        #ffff66,
+        #ffe600
+    );
+
+    border-bottom: 8px solid #b8860b;
+    border-right: 8px solid #b8860b;
+
+    color: black;
+
+    box-shadow:
+        0 0 20px rgba(255,230,0,.7),
+        0 0 50px rgba(255,230,0,.4);
+}
+.mc-switch:hover .mc-switch-front{
+    transform: translateY(4px);
+
+    border-bottom: 3px solid #c49a00;
+
+    box-shadow:
+        0 0 25px rgba(255,230,0,.6);
+}
+

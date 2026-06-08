@@ -62,13 +62,114 @@
         <div class="hero-3d">
             <canvas id="controller-canvas"></canvas>
         </div>
+<section class="live-arcade-cabinet" style="padding: 60px 20px; text-align: center; background: rgba(10, 5, 20, 0.7); border-top: 4px solid #E4FF30; border-bottom: 4px solid #E4FF30;">
+    
+    <div class="ysws-banner" style="background: linear-gradient(90deg, #ff2a74, #B5A300); color: #fff; font-family: 'Press Start 2P'; font-size: 10px; padding: 12px; border-radius: 8px; max-width: 600px; margin: 0 auto 30px auto; border: 2px solid #FFF; box-shadow: 0 0 15px rgba(255, 42, 116, 0.4); line-height: 1.6;">
+        THE BEST GAME OF THE WEEK (SHIPPED BY @hridhaan)!
+    </div>
+
+    <div class="cabinet-outer" style="max-width: 420px; margin: 0 auto; background: #fcd46c; border: 6px solid #000; border-radius: 16px; box-shadow: 12px 12px 0px rgba(0,0,0,0.3); padding: 24px 20px 20px 20px; position: relative;">
+        
+        <div style="position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: #ff6074; color: white; font-family: 'Press Start 2P'; font-size: 10px; padding: 8px 16px; border: 4px solid #000; box-shadow: 4px 4px 0 #000; white-space: nowrap; z-index: 10;">
+            PLAYABLE GAME!
+        </div>
+        
+        <div style="font-size: 28px; color: #000; margin-top: -10px; margin-bottom: 5px; animation: bounceArrow 1s infinite alternate;">⬇</div>
+
+        <div class="cabinet-monitor" style="background: #181c34; border: 6px solid #000; border-radius: 8px; padding: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.85);">
+            
+            <div style="display: flex; justify-content: space-between; font-family: 'Press Start 2P'; font-size: 8px; color: #fcd46c; margin-bottom: 8px; padding: 0 4px;">
+                <span>arcade mode</span>
+                <span id="cabinetGameName" style="color: #ff6074;">SPACE INVADERS</span>
+            </div>
+
+            <div class="screen-viewport" style="position: relative; background: #000; aspect-ratio: 4/5; width: 100%; border: 4px solid #000; border-radius: 4px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <canvas id="miniGameCanvas" width="360" height="450" style="display: block; background: #0b0d19; cursor: none;"></canvas>
+            </div>
+        </div>
+
+        <div class="control-deck" style="background: #28242c; border: 6px solid #000; border-radius: 8px; margin-top: 16px; padding: 16px 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.4);">
+            
+            <div style="width: 50px; height: 50px; background: #1a181c; border: 3px solid #000; border-radius: 4px; display: flex; justify-content: center; padding-top: 6px;">
+                <div style="width: 6px; height: 16px; background: #ff6074; border-radius: 1px; box-shadow: 0 0 8px #ff6074;"></div>
+            </div>
+
+            <div style="text-align: center; color: #fff; font-family: 'Press Start 2P'; font-size: 7px; line-height: 1.4;">
+                MOVE MOUSE TO AIM<br>CLICK TO FIRE LASERS
+            </div>
+
+            <div style="display: flex; gap: 6px; align-items: center;">
+                <div style="width: 18px; height: 18px; background: #ff6074; border: 3px solid #000; border-radius: 4px; box-shadow: 0 2px 0 #000;"></div>
+                <div style="width: 18px; height: 18px; background: #fcd46c; border: 3px solid #000; border-radius: 4px; box-shadow: 0 2px 0 #000;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes bounceArrow {
+        0% { transform: translateY(-2px); }
+        100% { transform: translateY(6px); }
+    }
+</style>
+
+        
     </section>
+     <div class="selector-section">
+        <p class="selector-label">CHOOSE YOUR PATH</p>
+        <div class="path-buttons">
+            <div class="minecraft-btn" id="clubBtn" onclick="selectPath('club')">
+                <div class="mc-btn-front">Club Submission</div>
+            </div>
+            <div class="minecraft-btn" id="individualBtn" onclick="selectPath('individual')">
+                <div class="mc-btn-front">Individual Submission</div>
+            </div>
+        </div>
+
+        <div class="submission-content" id="clubContent">
+            <div class="content-inner">
+                <h2 class="content-title">ArcadeAi for Clubs</h2>
+                <p class="content-desc">ArcadeAi is a Hack Club program where you/your members build games and get rewarded. Run it as a workshop at your next meeting no experience needed, and it works for complete beginners. Clubs are welcome from anywhere in the world!</p>
+                <h3 class="content-subtitle">Running a workshop</h3>
+                <p class="content-text">Host an ArcadeAi workshop at your club meeting. Members will build their own game using a AI (As per the guide), host it on GitHub Pages, and submit it. Each approved submission earns them rewards. You can <a href="#" class="content-link">use our workshop guide</a> to run the session.</p>
+                <h3 class="content-subtitle">How it works</h3>
+                <div class="steps-grid">
+                    <div class="step-card"><span class="step-num">1</span><p>Run the workshop with your club</p></div>
+                    <div class="step-card"><span class="step-num">2</span><p>Members build & host their games</p></div>
+                    <div class="step-card"><span class="step-num">3</span><p>Close your workshop</p></div>
+                    <div class="step-card"><span class="step-num">4</span><p>Get your reward grant!</p></div>
+                </div>
+                <button class="btn-primary" style="margin-top: 24px;">Submit Your Club »</button>
+            </div>
+        </div>
+
+        <div class="yaydino2">
+            <img src="1.png" alt="YayDino">
+        </div>
+
+        <div class="submission-content" id="individualContent">
+            <div class="content-inner">
+                <h2 class="content-title">ArcadeAi for Individuals</h2>
+                <p class="content-desc">Building solo? No problem. ArcadeAi is open to any teenager who wants to build a game and get rewarded for shipping it. No club needed — just you, your code, and your ideas.</p>
+                <h3 class="content-subtitle">How it works</h3>
+                <p class="content-text">Build a game, host it on GitHub Pages or itch.io, and submit it. Each approved submission earns you rewards. Check out the <a href="#rules" class="content-link">requirements & examples page</a> first.</p>
+                <h3 class="content-subtitle">Steps</h3>
+                <div class="steps-grid">
+                    <div class="step-card"><span class="step-num">1</span><p>Build your game</p></div>
+                    <div class="step-card"><span class="step-num">2</span><p>Host it online</p></div>
+                    <div class="step-card"><span class="step-num">3</span><p>Submit your game</p></div>
+                    <div class="step-card"><span class="step-num">4</span><p>Claim your reward!</p></div>
+                </div>
+                <button class="btn-primary" style="margin-top: 24px;">Submit Your Game »</button>
+            </div>
+        </div>
 
     <section class="ai-section">
         <span class="section-tag">Using AI?</span>
         <h2 class="ai-title">Why Are We Using AI?</h2>
         <p class="ai-description">
             Games can take weeks to build from scratch.
+            And AI is great tool to learn if used in the right way. So for ArcadeAi, we want to encourage participants to use AI to build the first version of their game, then improve it with their own ideas and creativity.
             AI helps you learn in this and makes the process a bit faster so you can focus on
             experimenting, creating, and making something uniquely yours (aka your own first game).
         </p>
@@ -106,14 +207,14 @@
 
     <section class="arcade-process">
         <div class="process-header">
-            <span class="process-tag">ARCADE JOURNEY</span>
-            <h2 class="process-title">How Arcade Works</h2>
+            <span class="process-tag">ARCADEAi JOURNEY</span>
+            <h2 class="process-title">How ArcadeAi Works</h2>
             <p class="process-subtitle">
                 Build a game with AI, improve it with your own ideas, then launch it for the world to play.
             </p>
         </div>
         <div class="process-image-container">
-            <img src="Screenshot 2026-06-01 232734.png" alt="How Arcade Works" class="process-image">
+            <img src="workflow.png" alt="How Arcade Works" class="process-image">
         </div>
         <div class="process-flow">
             <div class="flow-card">
@@ -137,54 +238,7 @@
         <div class="process-quote">From a prompt to a playable game.</div>
     </section>
     
-    <div class="selector-section">
-        <p class="selector-label">CHOOSE YOUR PATH</p>
-        <div class="path-buttons">
-            <div class="minecraft-btn" id="clubBtn" onclick="selectPath('club')">
-                <div class="mc-btn-front">Club Submission</div>
-            </div>
-            <div class="minecraft-btn" id="individualBtn" onclick="selectPath('individual')">
-                <div class="mc-btn-front">Individual Submission</div>
-            </div>
-        </div>
-
-        <div class="submission-content" id="clubContent">
-            <div class="content-inner">
-                <h2 class="content-title">Arcade for Clubs</h2>
-                <p class="content-desc">Arcade is a Hack Club program where you/your members build games and get rewarded. Run it as a workshop at your next meeting no experience needed, and it works for complete beginners. Clubs are welcome from anywhere in the world!</p>
-                <h3 class="content-subtitle">Running a workshop</h3>
-                <p class="content-text">Host an Arcade workshop at your club meeting. Members will build their own game using a AI (As per the guide), host it on GitHub Pages, and submit it. Each approved submission earns them rewards. You can <a href="#" class="content-link">use our workshop guide</a> to run the session.</p>
-                <h3 class="content-subtitle">How it works</h3>
-                <div class="steps-grid">
-                    <div class="step-card"><span class="step-num">1</span><p>Run the workshop with your club</p></div>
-                    <div class="step-card"><span class="step-num">2</span><p>Members build & host their games</p></div>
-                    <div class="step-card"><span class="step-num">3</span><p>Close your workshop</p></div>
-                    <div class="step-card"><span class="step-num">4</span><p>Get your reward grant!</p></div>
-                </div>
-                <button class="btn-primary" style="margin-top: 24px;">Submit Your Club »</button>
-            </div>
-        </div>
-
-        <div class="yaydino2">
-            <img src="1.png" alt="YayDino">
-        </div>
-
-        <div class="submission-content" id="individualContent">
-            <div class="content-inner">
-                <h2 class="content-title">Arcade for Individuals</h2>
-                <p class="content-desc">Building solo? No problem. Arcade is open to any teenager who wants to build a game and get rewarded for shipping it. No club needed — just you, your code, and your ideas.</p>
-                <h3 class="content-subtitle">How it works</h3>
-                <p class="content-text">Build a game, host it on GitHub Pages or itch.io, and submit it. Each approved submission earns you rewards. Check out the <a href="#rules" class="content-link">requirements & examples page</a> first.</p>
-                <h3 class="content-subtitle">Steps</h3>
-                <div class="steps-grid">
-                    <div class="step-card"><span class="step-num">1</span><p>Build your game</p></div>
-                    <div class="step-card"><span class="step-num">2</span><p>Host it online</p></div>
-                    <div class="step-card"><span class="step-num">3</span><p>Submit your game</p></div>
-                    <div class="step-card"><span class="step-num">4</span><p>Claim your reward!</p></div>
-                </div>
-                <button class="btn-primary" style="margin-top: 24px;">Submit Your Game »</button>
-            </div>
-        </div>
+   
     </div> <section class="rewards-section">
         <div class="rewards-header">
             <h2 class="rewards-title">Make a Game using AI</h2>
@@ -282,9 +336,9 @@
     </section>
 
     <section id="guides" class="guide-section">
-        <h2 class="guide-heading">Arcade Guide</h2>
+        <h2 class="guide-heading">ArcadeAi Guide</h2>
         <p class="guide-text">
-            Learn everything you need to know about Arcade, submissions, rewards, workshops, and project requirements.
+            Learn everything you need to know about ArcadeAi, submissions, rewards, workshops, and project requirements.
         </p>
         <div class="guide-container">
             <iframe src="https://www.canva.com/design/DAHLJIkIras/yFGuUKuNm_g_faqWocFEzg/view?embed" allowfullscreen></iframe>
@@ -324,7 +378,7 @@
    <div class="music-player" id="musicPlayer">
     <div class="player-body" id="playerBody">
         
-        <audio id="arcadeAudio" crossorigin="anonymous"></audio>
+        <audio id="arcadeAudio"></audio>
         
         <div class="matrix-container">
             <canvas id="audioMatrix" width="150" height="40"></canvas>
@@ -335,7 +389,7 @@
         </div>
         <div class="player-controls">
             <button class="ctrl-btn" id="prevBtn">⏮</button>
-            <button class="ctrl-btn play-btn" id="playBtn">⏸</button>
+            <button class="ctrl-btn play-btn" id="playBtn">▶</button>
             <button class="ctrl-btn" id="nextBtn">⏭</button>
             <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
         </div>

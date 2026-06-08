@@ -99,7 +99,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-// ── MUSIC PLAYER WITH RETRO AUDIO MATRIX VISUALIZER ──
+// ── MUSIC PLAYER WITH AUTOMATIC RETRO MATRIX VISUALIZER ──
 const playlist = [
     { file: 'slimeyfox-arcade-80s-era-481352 (2).mp3', name: 'Arcade (80s Era)' },
     { file: 'enemy_instrumental.mp3', name: 'Enemy (Instrumental)' },
@@ -110,15 +110,9 @@ const playlist = [
 
 let currentTrack = 0;
 let isPlaying = false;
-const audio = new Audio();
-audio.volume = 0.7;
 
-// Web Audio API Elements
-let audioContext;
-let analyzer;
-let dataArray;
-let sourceNode;
-let isAudioContextInitialized = false;
+const audio = document.getElementById('arcadeAudio') || new Audio(); 
+audio.volume = 0.7;
 
 const playBtn = document.getElementById('playBtn');
 const prevBtn = document.getElementById('prevBtn');
@@ -127,34 +121,6 @@ const songName = document.getElementById('songName');
 const volumeSlider = document.getElementById('volumeSlider');
 const matrixCanvas = document.getElementById('audioMatrix');
 let matrixCtx = matrixCanvas ? matrixCanvas.getContext('2d') : null;
-
-// Safe Initialization Engine for Audio Analysis Nodes
-function initAudioAnalyzer() {
-    if (isAudioContextInitialized) return; // Prevent double creation crash
-
-    try {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        analyzer = audioContext.createAnalyser();
-        
-        // Lower fftSize creates wider, chunky, retro-style bars (16 bars total)
-        analyzer.fftSize = 32; 
-        
-        const bufferLength = analyzer.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        
-        // Wire the HTML Audio node into our script graph nodes
-        sourceNode = audioContext.createMediaElementSource(audio);
-        sourceNode.connect(analyzer);
-        analyzer.connect(audioContext.destination);
-        
-        isAudioContextInitialized = true;
-        
-        // Start matrix frame loop render
-        drawMatrix();
-    } catch (e) {
-        console.warn("Web Audio API matrix mapping bypassed:", e);
-    }
-}
 
 function loadTrack(index) {
     if (!playlist[index]) return;
@@ -166,13 +132,6 @@ function loadTrack(index) {
 }
 
 function togglePlay() {
-    // Wake up context nodes if browser paused them, or spin up fresh
-    if (audioContext && audioContext.state === 'suspended') {
-        audioContext.resume();
-    } else {
-        initAudioAnalyzer();
-    }
-
     if (isPlaying) {
         audio.pause();
         isPlaying = false;
@@ -181,7 +140,7 @@ function togglePlay() {
         audio.play().then(() => {
             isPlaying = true;
             if (playBtn) playBtn.textContent = '⏸';
-        }).catch(err => console.log("Audio context play blocked:", err));
+        }).catch(err => console.log("Playback blocked:", err));
     }
 }
 
@@ -195,39 +154,56 @@ function prevTrack() {
     loadTrack(currentTrack);
 }
 
-// ── MATRIX CANVAS RENDER ANIMATION LOOP ──
-function drawMatrix() {
-    if (!matrixCtx || !analyzer) return;
+// ── AUTOMATIC MATRIX RENDER ENGINE ──
+let waveTime = 0;
 
-    requestAnimationFrame(drawMatrix);
-    
-    // Extract dynamic frequency changes from active decibel range arrays
-    analyzer.getByteFrequencyData(dataArray);
-    
+function drawMatrixLoop() {
+    if (!matrixCtx || !matrixCanvas) return;
+    requestAnimationFrame(drawMatrixLoop);
+
     const width = matrixCanvas.width;
     const height = matrixCanvas.height;
-    
-    // Creates a neon persistence-of-vision trailing blur by drawing opaque squares over history frames
+
+    // Smooth trail cleanup layer
     matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.25)';
     matrixCtx.fillRect(0, 0, width, height);
-    
-    const barCount = analyzer.frequencyBinCount;
-    const barWidth = (width / barCount) - 2;
+
+    const barCount = 16; 
+    const barWidth = (width / barCount) - 1.5;
     let x = 0;
 
+    // Locked default behaviors
+    const defaultFxSpeed = 5;       // Smooth wave animation pacing
+    const defaultBaseHue = 340;     // Starts at hot neon pink/magenta
+
+    if (isPlaying) {
+        waveTime += 0.08 * (defaultFxSpeed * 0.3);
+    }
+
     for (let i = 0; i < barCount; i++) {
-        const percent = dataArray[i] / 255;
-        const barHeight = percent * height;
-        
-        // Retro-Futuristic Rainbow: Modulating HSL spectrum offsets
-        matrixCtx.fillStyle = `hsl(${250 + (i * 8)}, 100%, 60%)`;
-        
-        // Draw each column box starting at bottom container threshold bound
+        let barHeight = 2; // Flat idle line threshold
+
+        if (isPlaying) {
+            // Rhythmic arcade tracking waves
+            const sineA = Math.sin(i * 0.5 + waveTime);
+            const sineB = Math.cos(i * 0.2 - waveTime * 1.3);
+            const randomJitter = Math.random() * 0.25; 
+
+            const compositeWave = Math.abs(sineA + sineB) / 2 + randomJitter;
+            barHeight = compositeWave * (height - 4) + 2;
+        }
+
+        // Standardized color gradient mapping (Shifts beautifully from Pink to Orange/Yellow)
+        const elementHue = (defaultBaseHue + (i * 4)) % 360;
+        matrixCtx.fillStyle = `hsl(${elementHue}, 100%, 60%)`;
+
         matrixCtx.fillRect(x, height - barHeight, barWidth, barHeight);
-        
-        x += barWidth + 2;
+        x += barWidth + 1.5;
     }
 }
+
+// Kick off drawing loop immediately
+drawMatrixLoop();
 
 audio.addEventListener('ended', nextTrack);
 
@@ -238,15 +214,9 @@ if (playBtn) playBtn.addEventListener('click', togglePlay);
 if (nextBtn) nextBtn.addEventListener('click', nextTrack);
 if (prevBtn) prevBtn.addEventListener('click', prevTrack);
 
-// Boot first metadata profile state
 loadTrack(0);
 
-// Global Exporter Hook so your main start Arcade switch can initialize this as well
 window.forceStartMusicWithMatrix = function() {
-    initAudioAnalyzer();
-    if (audioContext && audioContext.state === 'suspended') {
-        audioContext.resume();
-    }
     if (!isPlaying) {
         audio.play().then(() => {
             isPlaying = true;
@@ -392,4 +362,196 @@ if (startBtn && readyScreen) {
             }, 800);
         }, 500);
     });
+}
+
+
+// ── NATIVE CABINET GAME ENGINE: SPACE INVADERS ──
+const gameCanvas = document.getElementById("miniGameCanvas");
+const gameCtx = gameCanvas ? gameCanvas.getContext("2d") : null;
+
+if (gameCanvas && gameCtx) {
+    // Game State Variables
+    let playerWidth = 30;
+    let playerHeight = 15;
+    let playerX = (gameCanvas.width - playerWidth) / 2;
+    const playerY = gameCanvas.height - 30;
+
+    let lasers = [];
+    let laserSpeed = 6;
+    let lastShotTime = 0;
+    const fireRateLimit = 250; // Delay in milliseconds between laser shots
+
+    let invaders = [];
+    const invaderRows = 4;
+    const invaderCols = 6;
+    const invaderWidth = 24;
+    const invaderHeight = 16;
+    const invaderPadding = 14;
+    const invaderOffsetTop = 50;
+    const invaderOffsetLeft = 35;
+
+    let invaderDirection = 1; // 1 = right, -1 = left
+    let invaderSpeed = 0.8;
+    let invaderDropDistance = 10;
+
+    let gameScore = 0;
+    let gameOver = false;
+    let gameWon = false;
+
+    // Build the grid of enemy invaders
+    function initInvaders() {
+        invaders = [];
+        for (let c = 0; c < invaderCols; c++) {
+            invaders[c] = [];
+            for (let r = 0; r < invaderRows; r++) {
+                // Different row colors for retro vibe
+                let hue = 180 + (r * 40); 
+                invaders[c][r] = { x: 0, y: 0, active: true, hue: hue };
+            }
+        }
+    }
+
+    // Capture controls (Move ship with mouse pointer)
+    document.addEventListener("mousemove", (e) => {
+        const rect = gameCanvas.getBoundingClientRect();
+        const relativeX = e.clientX - rect.left;
+        if (relativeX > 0 && relativeX < gameCanvas.width) {
+            playerX = relativeX - playerWidth / 2;
+        }
+    });
+
+    // Tap or Click to shoot lasers
+    gameCanvas.addEventListener("click", () => {
+        const currentTime = Date.now();
+        if (currentTime - lastShotTime > fireRateLimit && !gameOver && !gameWon) {
+            lasers.push({ x: playerX + playerWidth / 2 - 2, y: playerY, w: 3, h: 10 });
+            lastShotTime = currentTime;
+        } else if (gameOver || gameWon) {
+            // Restart game on click if it's over
+            gameScore = 0;
+            invaderSpeed = 0.8;
+            gameOver = false;
+            gameWon = false;
+            lasers = [];
+            initInvaders();
+        }
+    });
+
+    // Reset everything initially
+    initInvaders();
+
+    // Main Engine Update & Render Loop
+    function updateGameLoop() {
+        requestAnimationFrame(updateGameLoop);
+
+        // Clear view with retro deep navy space background
+        gameCtx.fillStyle = "#0b0d19";
+        gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+        // Render HUD text display
+        gameCtx.font = "8px 'Press Start 2P', monospace";
+        gameCtx.fillStyle = "#ffffff";
+        gameCtx.fillText(`SCORE: ${gameScore}`, 15, 25);
+
+        if (gameOver) {
+            gameCtx.fillStyle = "#ff6074";
+            gameCtx.fillText("GAME OVER", gameCanvas.width / 2 - 45, gameCanvas.height / 2);
+            gameCtx.fillStyle = "#ffffff";
+            gameCtx.fillText("CLICK TO RESTART", gameCanvas.width / 2 - 75, gameCanvas.height / 2 + 20);
+            return;
+        }
+
+        if (gameWon) {
+            gameCtx.fillStyle = "#E4FF30";
+            gameCtx.fillText("VICTORY!", gameCanvas.width / 2 - 40, gameCanvas.height / 2);
+            gameCtx.fillStyle = "#ffffff";
+            gameCtx.fillText("CLICK FOR NEXT WAVE", gameCanvas.width / 2 - 85, gameCanvas.height / 2 + 20);
+            return;
+        }
+
+        // 1. DRAW PLAYER SHIP (Pixel Art block)
+        gameCtx.fillStyle = "#2cd4bc";
+        gameCtx.fillRect(playerX, playerY, playerWidth, playerHeight);
+        gameCtx.fillRect(playerX + playerWidth / 2 - 4, playerY - 4, 8, 4); // Cannon nozzle
+
+        // 2. MOVE AND DRAW LASERS
+        gameCtx.fillStyle = "#ff2a74";
+        for (let i = lasers.length - 1; i >= 0; i--) {
+            lasers[i].y -= laserSpeed;
+            gameCtx.fillRect(lasers[i].x, lasers[i].y, lasers[i].w, lasers[i].h);
+
+            // Strip out dead lasers hitting top border wall boundaries
+            if (lasers[i].y < 0) {
+                lasers.splice(i, 1);
+            }
+        }
+
+        // 3. MOVE AND DRAW INVADER ARMADA
+        let changeDirection = false;
+        let activeCount = 0;
+
+        for (let c = 0; c < invaderCols; c++) {
+            for (let r = 0; r < invaderRows; r++) {
+                let inv = invaders[c][r];
+                if (inv.active) {
+                    activeCount++;
+                    // Map positions on grid coordinates
+                    inv.x = (c * (invaderWidth + invaderPadding)) + invaderOffsetLeft + (invaderDirection * invaderSpeed);
+                    inv.y = (r * (invaderHeight + invaderPadding)) + invaderOffsetTop;
+
+                    // Hit visual limits on layout walls?
+                    if (inv.x + invaderWidth > gameCanvas.width - 15 || inv.x < 15) {
+                        changeDirection = true;
+                    }
+
+                    // Check if enemies breached defense threshold lines
+                    if (inv.y + invaderHeight >= playerY) {
+                        gameOver = true;
+                    }
+
+                    // Draw the individual alien cube
+                    gameCtx.fillStyle = `hsl(${inv.hue}, 100%, 60%)`;
+                    gameCtx.fillRect(inv.x, inv.y, invaderWidth, invaderHeight);
+                    // Add tiny neon core eyes inside the blocks
+                    gameCtx.fillStyle = "#000000";
+                    gameCtx.fillRect(inv.x + 4, inv.y + 4, 3, 3);
+                    gameCtx.fillRect(inv.x + invaderWidth - 7, inv.y + 4, 3, 3);
+
+                    // 4. CHECK COLLISION (Lasers hitting alien invaders)
+                    for (let l = lasers.length - 1; l >= 0; l--) {
+                        let lx = lasers[l].x;
+                        let ly = lasers[l].y;
+
+                        if (lx > inv.x && lx < inv.x + invaderWidth && ly > inv.y && ly < inv.y + invaderHeight) {
+                            inv.active = false;
+                            lasers.splice(l, 1);
+                            gameScore += 10;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Handle dropping down lines when hitting boundaries
+        if (changeDirection) {
+            invaderDirection *= -1;
+            invaderOffsetLeft += invaderDirection * 4; // Shift base offset positioning safely
+            for (let c = 0; c < invaderCols; c++) {
+                for (let r = 0; r < invaderRows; r++) {
+                    invaders[c][r].y += invaderDropDistance;
+                }
+            }
+            invaderOffsetTop += invaderDropDistance;
+        }
+
+        // All clean? Wipe check condition
+        if (activeCount === 0) {
+            gameWon = true;
+            invaderSpeed += 0.4; // Accelerate enemy parameters on subsequent drops
+        }
+    }
+
+    // Trigger frame updates
+    updateGameLoop();
 }
